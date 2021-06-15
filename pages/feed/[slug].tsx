@@ -1,65 +1,73 @@
- 
 import { Toolbar } from "../../components/toolbar";
 import { useRouter } from "next/router";
-import Link from 'next/link';
-export const Feed = ({ pageNumber, articles }) => {
-    const router = useRouter();
-    console.log(pageNumber, articles);
-    return (
-        <div className="flex  items-center flex-col" >
-            <Toolbar />
-
-            {articles.map((article, index) => (
-                <div key={index} className="w-4/6 mt-20 mb-6 pb-6 border-b-2 border-black">
-                    <h1 onClick={() => (window.location.href = article.url)} className=" cursor-pointer align-center text-center text-2xl font-bold">{article.title}</h1>
-                    <p className="my-2 text-2xl ">{article.description}</p>
-                    {!!article.urlToImage && <img className="w-full" src={article.urlToImage} />}
-                </div>
-            ))}
+import Link from "next/link";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { useEffect, useState } from "react";
+import  Aricle  from "../components/article";
 
 
-            <div className="w-4/6 flex justify-between gap-4 mb-4">
-                <Link href={`/feed/${encodeURIComponent(pageNumber-1)}`}>
-                    <div className={pageNumber === 1 ? 'text-gray-500 cursor-not-allowed' : 'cursor-pointer '}  >
-                        Previous Page
-                    </div>
-                </Link>
+export const Feed = ({ pageNumber, articles, totalResults }) => {
+  const router = useRouter();
+  const [articles1, setArticles1] = useState(articles);
+  const [hasMore, setHasMore] = useState(true);
 
-                <div> #{pageNumber}</div>
-
-                <Link href={`/feed/${encodeURIComponent(pageNumber+1)}`}>
-                    <div className={pageNumber === 5 ? 'text-gray-500 cursor-not-allowed' : 'cursor-pointer '}  >
-                        Next Page
-                    </div>
-                </Link>
-            </div>
-
-        </div>
-    )
-}
-
-export const getServerSideProps = async pageContex => {
-    const pageNumber = pageContex.query.slug;
-    if (!pageNumber || pageNumber > 5 || pageNumber < 1) {
-        return {
-            props: {
-                articles: [],
-                pageNumber: 1
-            }
-        }
-    }
+  const getMoreArticles1 = async () => {
+    pageNumber++;
+    const size = 5 * pageNumber;
     const apiResponse = await fetch(
-        `https://newsapi.org/v2/top-headlines?country=us&pageSize=5&page=${pageNumber}&apiKey=2db9e9a8a05b4a86a54586fbfe958ad1`,
-        
+      `https://newsapi.org/v2/top-headlines?country=us&pageSize=${size}&page=${pageNumber}&apiKey=2db9e9a8a05b4a86a54586fbfe958ad1`
     );
+    // const newArticles1 = await res.json();
     const apiJson = await apiResponse.json();
     const { articles } = apiJson;
+    setArticles1((articles1) => [...articles1, ...articles]);
+  };
 
-    return {
-        props: {
-            articles,
-            pageNumber: Number.parseInt(pageNumber)
+  useEffect(() => {
+    setHasMore(totalResults > articles1.length ? true : false);
+  }, [articles1]);
+
+  console.log(pageNumber);
+  return (
+    <div className="flex  items-center flex-col">
+      <Toolbar />
+
+      <InfiniteScroll
+        className="items-center md:w-2/3 sm:w-full lg:w-1/2 m-auto  "
+        dataLength={articles1.length}
+        next={getMoreArticles1}
+        hasMore={hasMore}
+        loader={<h4>Loading...</h4>}
+        endMessage={
+          <p style={{ textAlign: "center" }}>
+            <b>Yay! You have seen it all</b>
+          </p>
         }
-    }
+      >
+        {articles1.map((article, index) => (
+          <Aricle article={article} index={index} />
+        ))}
+      </InfiniteScroll>
+
+    </div>
+  );
+};
+
+export const getServerSideProps = async (pageContex) => {
+  const pageNumber = pageContex.query.slug;
+
+  const apiResponse = await fetch(
+    `https://newsapi.org/v2/top-headlines?country=us&pageSize=5&page=${pageNumber}&apiKey=2db9e9a8a05b4a86a54586fbfe958ad1`
+  );
+  const apiJson = await apiResponse.json();
+  const { articles } = apiJson;
+  const { totalResults } = apiJson;
+  return {
+    props: {
+      articles,
+      pageNumber: Number.parseInt(pageNumber),
+      totalResults,
+    },
+  };
 };
 export default Feed;
