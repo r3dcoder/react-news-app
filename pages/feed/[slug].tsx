@@ -1,5 +1,5 @@
-import router from "next/router";
-import { Toolbar } from "../components/toolbar";
+ 
+import { Toolbar } from "../../components/toolbar";
 import { useRouter } from "next/router";
 import Link from 'next/link';
 export const Feed = ({ pageNumber, articles }) => {
