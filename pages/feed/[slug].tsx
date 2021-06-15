@@ -1,9 +1,9 @@
-import { Toolbar } from "../../components/toolbar";
+import  Toolbar  from "../../components/toolbar";
 import { useRouter } from "next/router";
-import Link from "next/link";
+import  Aricle  from "../../components/article";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useEffect, useState } from "react";
-import  Aricle  from "../components/article";
+
 
 
 export const Feed = ({ pageNumber, articles, totalResults }) => {
