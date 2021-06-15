@@ -1,4 +1,4 @@
-import { Toolbar } from "./components/toolbar";
+import { Toolbar } from "../components/toolbar";
 export const Profile = ({profile})=>{
    console.log(profile);
     
