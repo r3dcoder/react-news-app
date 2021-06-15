@@ -15,7 +15,7 @@ export const Feed = ({ pageNumber, articles, totalResults }) => {
     pageNumber++;
     const size = 5 * pageNumber;
     const apiResponse = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=us&pageSize=${size}&page=${pageNumber}&apiKey=2db9e9a8a05b4a86a54586fbfe958ad1`
+      `https://newsapi.org/v2/top-headlines?country=us&pageSize=5&page=${pageNumber}&apiKey=2db9e9a8a05b4a86a54586fbfe958ad1`
     );
     // const newArticles1 = await res.json();
     const apiJson = await apiResponse.json();
@@ -45,7 +45,7 @@ export const Feed = ({ pageNumber, articles, totalResults }) => {
         }
       >
         {articles1.map((article, index) => (
-          <Aricle article={article} index={index} />
+          <Aricle article={article} key={index} index={index}   />
         ))}
       </InfiniteScroll>
 

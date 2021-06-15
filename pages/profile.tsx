@@ -1,8 +1,6 @@
 import { Toolbar } from "../components/toolbar";
 export const Profile = ({profile})=>{
-   console.log(profile);
-    
-   
+ 
     return (
         <div className="flex  items-center flex-col">
           <Toolbar/>
@@ -28,11 +26,11 @@ export const getServerSideProps = async pageContext => {
             'https://my-json-server.typicode.com/r3dcoder/myprofile/db'
         )
 
-        const profile = await apiResponse.json();
+        const {profile} = await apiResponse.json();
 
         return {
             props:{
-                profile: profile.profile
+                profile 
             }
         }
 };
