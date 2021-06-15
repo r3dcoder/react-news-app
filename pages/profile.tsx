@@ -1,5 +1,5 @@
 import { Toolbar } from "../components/toolbar";
-export const Profile = ({profile})=>{
+export  const Profile = ({profile})=>{
  
     return (
         <div className="flex  items-center flex-col">

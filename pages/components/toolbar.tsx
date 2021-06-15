@@ -1,6 +1,6 @@
 import {useRouter} from 'next/router';
 
-export const Toolbar = () =>{
+function Toolbar() {
     const router = useRouter();
 
     return (
@@ -12,3 +12,5 @@ export const Toolbar = () =>{
         </div>
     )
 }
+
+export default Toolbar;
