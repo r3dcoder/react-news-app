@@ -19,7 +19,7 @@ export const Feed = ({ pageNumber, articles, totalResults }) => {
     );
     // const newArticles1 = await res.json();
     const apiJson = await apiResponse.json();
-    const { articles } = apiJson;
+    const { articles } = await apiJson;
     setArticles1((articles1) => [...articles1, ...articles]);
   };
 
