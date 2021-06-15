@@ -15,7 +15,12 @@ export const Feed = ({ pageNumber, articles, totalResults }) => {
     pageNumber++;
     const size = 5 * pageNumber;
     const apiResponse = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=us&pageSize=5&page=${pageNumber}&apiKey=2db9e9a8a05b4a86a54586fbfe958ad1`
+      `https://newsapi.org/v2/top-headlines?country=us&pageSize=5&page=${pageNumber}`,
+      {
+        headers:{
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_NEWS_KEY}` 
+        }
+      }
     );
     // const newArticles1 = await res.json();
     const apiJson = await apiResponse.json();
@@ -57,7 +62,12 @@ export const getServerSideProps = async (pageContex) => {
   const pageNumber = pageContex.query.slug;
 
   const apiResponse = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=us&pageSize=5&page=${pageNumber}&apiKey=2db9e9a8a05b4a86a54586fbfe958ad1`
+    `https://newsapi.org/v2/top-headlines?country=us&pageSize=5&page=${pageNumber}`,
+    {
+      headers:{
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_NEWS_KEY}` 
+      }
+    }
   );
   const apiJson = await apiResponse.json();
   const { articles } = apiJson;
