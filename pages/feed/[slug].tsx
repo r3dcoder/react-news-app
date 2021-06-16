@@ -70,7 +70,7 @@ const getData  = async (number) => {
   
 
   const apiResponse = await fetch(
-    `http://localhost:3000/api/articles`,
+    `https://news-react-app.vercel.app/api/articles`,
   ).then(res => res.json());
   console.log('api res', apiResponse)
   return apiResponse;
