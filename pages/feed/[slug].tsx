@@ -9,13 +9,15 @@ import { useEffect, useState } from "react";
 export const Feed = ({ pageNumber, articles, totalResults }) => {
   const router = useRouter();
   const [articles1, setArticles1] = useState(articles);
+  const [currentPage, setCurrentPage] = useState(2);
   const [hasMore, setHasMore] = useState(true);
 
   const getMoreArticles1 = async () => {
-    pageNumber++;
+    var cPage:number = currentPage+1;
+    setCurrentPage(cPage);
     const size = 5 * pageNumber;
     const proxyUrl = "http://news-react-app.vercel.app/"
-    const apiResponse = await getData(++pageNumber);
+    const apiResponse = await getData(currentPage);
     console.log(apiResponse);
   
     const { articles } = await apiResponse;
