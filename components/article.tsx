@@ -1,6 +1,6 @@
 import {useRouter} from 'next/router';
 
-function Aricle   ({article, index})  {
+function Aricle   ({article, index, goUrl})  {
     const router = useRouter();
 
     return (
@@ -10,7 +10,7 @@ function Aricle   ({article, index})  {
       >
       
         <h1
-          onClick={() => (window.location.href = article.url)}
+          onClick={() => (goUrl===true && (window.location.href = article.url))}
           className=" cursor-pointer align-center text-center text-2xl font-bold"
         > 
           {article.title}

@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import  Aricle  from "../../components/article";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useEffect, useState } from "react";
-
+import Link from 'next/Link'
 
 
 export const Feed = ({ pageNumber, articles, totalResults }) => {
@@ -31,7 +31,7 @@ export const Feed = ({ pageNumber, articles, totalResults }) => {
   return (
     <div className="flex  items-center flex-col">
       <Toolbar />
-
+      
       <InfiniteScroll
         className="items-center md:w-2/3 sm:w-full lg:w-1/2 m-auto  "
         dataLength={articles1.length}
@@ -44,8 +44,18 @@ export const Feed = ({ pageNumber, articles, totalResults }) => {
           </p>
         }
       >
+       
         {articles1.map((article, index) => (
-          <Aricle article={article} key={index} index={index}   />
+           <span onClick= {()=>router.push({
+             pathname: '/article',
+             query: { title: article.title, 
+              description: article.description, 
+              urlToImage:article.urlToImage,
+              url:article.url
+            }
+           })} className="cursor-pointer" >
+          <Aricle  article={article} key={index} index={index} goUrl={false}  />
+          </span>
         ))}
       </InfiniteScroll>
 
