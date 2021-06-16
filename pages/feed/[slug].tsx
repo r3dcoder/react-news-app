@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import  Aricle  from "../../components/article";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useEffect, useState } from "react";
-import Link from 'next/Link'
+ 
 
 
 export const Feed = ({ pageNumber, articles, totalResults }) => {
