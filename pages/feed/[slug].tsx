@@ -15,7 +15,7 @@ export const Feed = ({ pageNumber, articles, totalResults }) => {
     pageNumber++;
     const size = 5 * pageNumber;
     const proxyUrl = "http://news-react-app.vercel.app/"
-    const apiResponse = await getData(pageNumber);
+    const apiResponse = await getData(++pageNumber);
     console.log(apiResponse);
   
     const { articles } = await apiResponse;
@@ -64,9 +64,14 @@ export const Feed = ({ pageNumber, articles, totalResults }) => {
 
 const getData  = async (number) => {
   const apiResponse = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=us&pageSize=5&page=${number}&apiKey=2db9e9a8a05b4a86a54586fbfe958ad1`
-  );
-  return apiResponse.json();
+    `https://newsapi.org/v2/top-headlines?country=us&pageSize=5&page=${number}`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_NEWS_KEY}`,
+      },
+    },
+  ).then(res => res.json());
+  return apiResponse;
 }
 export const getServerSideProps = async (pageContex) => {
   const pageNumber = pageContex.query.slug;
