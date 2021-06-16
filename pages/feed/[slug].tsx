@@ -65,9 +65,8 @@ export const Feed = ({ pageNumber, articles, totalResults }) => {
 };
 
 const getData  = async (number) => {
-  var proxy_url = 'https://news-react-app.vercel.app/';
   const apiResponse = await fetch(
-    `${proxy_url}https://newsapi.org/v2/top-headlines?country=us&pageSize=5&page=${number}`,
+    `https://newsapi.org/v2/top-headlines?country=us&pageSize=5&page=${number}`,
     {
       headers: {
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_NEWS_KEY}`,
