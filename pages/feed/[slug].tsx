@@ -18,6 +18,7 @@ export const Feed = ({ pageNumber, articles, totalResults }) => {
     const apiResponse = await fetch(
       `${proxyUrl}https://newsapi.org/v2/top-headlines?country=us&pageSize=5&page=${2}&apiKey=2db9e9a8a05b4a86a54586fbfe958ad1`
     );
+    console.log(apiResponse);
     // const newArticles1 = await res.json();
     const apiJson = await apiResponse.json();
     const { articles } = await apiJson;
