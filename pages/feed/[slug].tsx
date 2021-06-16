@@ -66,7 +66,7 @@ export const Feed = ({ pageNumber, articles, totalResults }) => {
 
 const getData  = async (number) => {
   const apiResponse = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=us&pageSize=5&page=${number}`,
+    `https://newsapi.org/v2/top-headlines?country=us&pageSize=10&page=${number}`,
     {
       headers: {
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_NEWS_KEY}`,
