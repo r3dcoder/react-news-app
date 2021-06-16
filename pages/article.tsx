@@ -5,7 +5,7 @@ export  const ArticlePage = ({article})=>{
     return (
         <div className="flex  items-center flex-col">
           <Toolbar/>
-          <div className="cursor-pointer w-1/2">
+          <div className="cursor-pointer sm:w-full md:w-3/4 lg:w-1/2">
           <Aricle  article={article} key={0} index={0} goUrl={true}  />
           </div>
         </div>
