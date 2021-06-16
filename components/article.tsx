@@ -5,6 +5,7 @@ function Aricle   ({article, index, goUrl})  {
 
     return (
         <div
+        onClick={() => (goUrl===true && (window.location.href = article.url))}
         key={index}
         className="w-full mt-20 px-4 mb-6 pb-6 border-b-2 border-black"
       >
