@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import  Aricle  from "../../components/article";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useEffect, useState } from "react";
-
+import { server } from '../../config';
 
 export const Feed = ({ pageNumber, articles, totalResults }) => {
   const router = useRouter();
@@ -16,8 +16,8 @@ export const Feed = ({ pageNumber, articles, totalResults }) => {
     var cPage:number = currentPage+1;
     setCurrentPage(cPage);
     const size = 5 * pageNumber;
-    const proxyUrl = "http://news-react-app.vercel.app/"
-    const apiJson = await getData(pageNumber);
+   
+    const apiJson = await getData(currentPage);
     console.log('res ..', apiJson);
       const {apiResponse} = apiJson;
   
@@ -69,11 +69,13 @@ export const Feed = ({ pageNumber, articles, totalResults }) => {
 const getData  = async (number) => {
   
 
-  const apiResponse = await fetch(
-    `https://news-react-app.vercel.app/api/articles`,
-  ).then(res => res.json());
+  const apiResponse = await fetch(`${server}/api/${number}`,)
+  .then(res => res.json());
   console.log('api res', apiResponse)
   return apiResponse;
+
+
+
 }
 export const getServerSideProps = async (pageContex) => {
   const pageNumber = pageContex.query.slug;
