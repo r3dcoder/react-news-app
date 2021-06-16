@@ -16,7 +16,7 @@ export const Feed = ({ pageNumber, articles, totalResults }) => {
     const size = 5 * pageNumber;
     const proxyUrl = "https://news-react-app.vercel.app/feed/1/"
     const apiResponse = await fetch(
-      `${proxyUrl}https://newsapi.org/v2/top-headlines?country=us&pageSize=5&page=${2}&apiKey=2db9e9a8a05b4a86a54586fbfe958ad1`
+      `http://newsapi.org/v2/top-headlines?country=us&pageSize=5&page=${2}&apiKey=2db9e9a8a05b4a86a54586fbfe958ad1`
     );
     console.log(apiResponse);
     // const newArticles1 = await res.json();
