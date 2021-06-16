@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import  Aricle  from "../../components/article";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useEffect, useState } from "react";
- 
 
 
 export const Feed = ({ pageNumber, articles, totalResults }) => {
@@ -13,22 +12,25 @@ export const Feed = ({ pageNumber, articles, totalResults }) => {
   const [hasMore, setHasMore] = useState(true);
 
   const getMoreArticles = async () => {
+   
     var cPage:number = currentPage+1;
     setCurrentPage(cPage);
     const size = 5 * pageNumber;
     const proxyUrl = "http://news-react-app.vercel.app/"
-    const apiResponse = await getData(currentPage);
-    console.log(apiResponse);
+    const apiJson = await getData(pageNumber);
+    console.log('res ..', apiJson);
+      const {apiResponse} = apiJson;
+  
   
     const { articles } = await apiResponse;
     setArticles1((articles1) => [...articles1, ...articles]);
+    
   };
 
   useEffect(() => {
     setHasMore(totalResults > articles1.length ? true : false);
   }, [articles1]);
-
-  console.log(pageNumber);
+  
   return (
     <div className="flex  items-center flex-col">
       <Toolbar />
@@ -65,14 +67,12 @@ export const Feed = ({ pageNumber, articles, totalResults }) => {
 };
 
 const getData  = async (number) => {
+  
+
   const apiResponse = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=us&pageSize=10&page=${number}`,
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_NEWS_KEY}`,
-      },
-    },
+    `http://localhost:3000/api/articles`,
   ).then(res => res.json());
+  console.log('api res', apiResponse)
   return apiResponse;
 }
 export const getServerSideProps = async (pageContex) => {
@@ -80,8 +80,9 @@ export const getServerSideProps = async (pageContex) => {
  
   const apiJson = await getData(pageNumber);
   console.log('res ..', apiJson);
-  const { articles } = apiJson;
-  const { totalResults } = apiJson;
+  const {apiResponse} = apiJson;
+  const { articles } = apiResponse;
+  const { totalResults } = apiResponse;
    
   return {
     props: {
