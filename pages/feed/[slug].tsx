@@ -12,7 +12,7 @@ export const Feed = ({ pageNumber, articles, totalResults }) => {
   const [currentPage, setCurrentPage] = useState(2);
   const [hasMore, setHasMore] = useState(true);
 
-  const getMoreArticles1 = async () => {
+  const getMoreArticles = async () => {
     var cPage:number = currentPage+1;
     setCurrentPage(cPage);
     const size = 5 * pageNumber;
@@ -36,7 +36,7 @@ export const Feed = ({ pageNumber, articles, totalResults }) => {
       <InfiniteScroll
         className="items-center md:w-2/3 sm:w-full lg:w-1/2 m-auto  "
         dataLength={articles1.length}
-        next={getMoreArticles1}
+        next={getMoreArticles}
         hasMore={hasMore}
         loader={<h4>Loading...</h4>}
         endMessage={
@@ -65,8 +65,9 @@ export const Feed = ({ pageNumber, articles, totalResults }) => {
 };
 
 const getData  = async (number) => {
+  var proxy_url = 'https://news-react-app.vercel.app/';
   const apiResponse = await fetch(
-    `https://newsapi.org/v2/top-headlines?country=us&pageSize=5&page=${number}`,
+    `${proxy_url}https://newsapi.org/v2/top-headlines?country=us&pageSize=5&page=${number}`,
     {
       headers: {
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_NEWS_KEY}`,
